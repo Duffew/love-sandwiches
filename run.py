@@ -47,7 +47,6 @@ def validate_data(values):
     Inside the try, converts all string values to integers.
     Raises ValueError if strings cannot be converted into int,
     or if there aren't exactly 6 values.
-    print(values)
     """
     try:
         # convert list of string data to integers
@@ -66,6 +65,18 @@ def validate_data(values):
 
     return True # if no error
 
-
+# create a function to update the sales worksheet
+def update_sales_worksheet(data):
+    """
+    Update sales woeksheet, add new row with the list data provided
+    """
+    print("Updating sales worksheet...\n")
+    # now access the Google Sheet - create a new variable
+    sales_worksheet = SHEET.worksheet("sales")
+    # add a new row to the worksheet - gspread is helping us here
+    sales_worksheet.append_row(data)
+    print("Sales worksheet updated!\n")
 
 data = get_sales_data()
+sales_data = [int(num) for num in data]
+update_sales_worksheet(sales_data)
