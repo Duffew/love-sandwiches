@@ -41,6 +41,8 @@ def validate_data(values):
     print(values)
     """
     try:
+        # convert list of string data to integers
+        [int(value) for value in values]
         # if the length of the list does not equal 6, show a custom error message
         if len(values) != 6:
             raise ValueError(
