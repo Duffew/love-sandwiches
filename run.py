@@ -1,5 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
+from pprint import pprint
 
 # define scope as a contstant variable (capital letters)
 SCOPE = [
@@ -76,7 +77,31 @@ def update_sales_worksheet(data):
     # add a new row to the worksheet - gspread is helping us here
     sales_worksheet.append_row(data)
     print("Sales worksheet updated!\n")
+    
 
-data = get_sales_data()
-sales_data = [int(num) for num in data]
-update_sales_worksheet(sales_data)
+# create a function to calculate the surplus
+def calculate_surplus_data(sales_row):
+    """
+    Compare sales with stock to calculate teh surplus for each item type.
+
+    The surplus is defined as the sales figure subtracted from the stock:
+    - Positive surplus indicates waste
+    - Negative surplus indicates extra made when stock sold out
+    """
+    print("Calculating surplus data...\n")
+    stock = SHEET.worksheet("stock").get_all_values()
+    stock_row = stock[-1] #access the last entry from our list - the most recent day's stock
+    print(stock_row)
+
+# wrap main function calls
+def main():
+    """
+    Run all program functions
+    """
+    data = get_sales_data()
+    sales_data = [int(num) for num in data]
+    update_sales_worksheet(sales_data)
+    calculate_surplus_data(sales_data)
+
+print("Welcome to Love Sandwiches Data Automation.")
+main()
