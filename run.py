@@ -41,13 +41,13 @@ def validate_data(values):
     print(values)
     """
     try:
-        # if the length of the list does not equal 6, show a custom message
+        # if the length of the list does not equal 6, show a custom error message
         if len(values) != 6:
             raise ValueError(
                 f"Exactly 6 values are required. You provided {len(values)}"
             )
         # only catches errors if they are ValueErrors -  an operation receives an argument with an inappropriate value - 
-        # and places the input into a variable (e) - shorthand for error - so we can then access details of the error
+        # and places the input into a variable (e) - shorthand for 'error' - so we can then access details of the error
         
     except ValueError as e:
             print(f"Invalid data: {e}, please try again.\n")
