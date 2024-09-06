@@ -21,8 +21,37 @@ def get_sales_data():
     print("Data should be 6 numbers separated by commas.")
     print("Example: 10,20,30,40,50,60\n")
 
-    #next use the input method to get our sales data from the terminal
+    # next use the input method to get our sales data from the terminal
     data_str = input("Enter your data here: ")
-    print(f"The data provided is {data_str}")
+    
+    # convert the user's string input data to a list 
+    # and use the split() method - returns the broken up values as a list -  
+    # to remove all the commas
+
+    sales_data = data_str.split(",")
+    validate_data(sales_data)
+
+# create a function to handle data validation - we need exactly 6 numbers
+# call the function in the get_sales_data() function above
+def validate_data(values):
+    """
+    Inside the try, converts all string values to integers.
+    Raises ValueError if strings cannot be converted into int,
+    or if there aren't exactly 6 values.
+    print(values)
+    """
+    try:
+        # if the length of the list does not equal 6, show a custom message
+        if len(values) != 6:
+            raise ValueError(
+                f"Exactly 6 values are required. You provided {len(values)}"
+            )
+        # only catches errors if they are ValueErrors -  an operation receives an argument with an inappropriate value - 
+        # and places the input into a variable (e) - shorthand for error - so we can then access details of the error
+        
+    except ValueError as e:
+            print(f"Invalid data: {e}, please try again.\n")
+
+
 
 get_sales_data()
