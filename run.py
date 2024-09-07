@@ -98,7 +98,7 @@ def update_worksheet(data, worksheet):
     print(f"Updating {worksheet} worksheet...\n")
     worksheet_to_update = SHEET.worksheet(worksheet)
     worksheet_to_update.append_row(data)
-    print(f"{worksheet} worksheet updated!")
+    print(f"{worksheet} worksheet updated!\n")
 
 
 # create a function to calculate the surplus
@@ -134,6 +134,22 @@ def get_last_5_entries_sales():
         columns.append(column[-5:]) # slices the last 5 entries from our lists
     return columns
 
+def calculate_stock_data(data):
+    """
+    Calculate the average stock for each item type, adding 10%
+    """
+    print("Calculating stock data...\n")
+    new_stock_data = []
+
+    for column in data:
+        int_column = [int(num) for num in column] # coverts values into integers so we can do arithmetic
+        average = sum(int_column) / len(int_column)
+        stock_num = average * 1.1
+        new_stock_data.append(round(stock_num))
+
+    return new_stock_data # and pass it back to where the function was called
+    # and assign it a variable named stock_data
+
 
 # wrap main function calls
 def main():
@@ -145,8 +161,10 @@ def main():
     update_worksheet(sales_data, "sales")
     new_surplus_data = calculate_surplus_data(sales_data)
     update_worksheet(new_surplus_data, "surplus") # add the new function and PASS IT THE DATA YOU WANT TO INSERT
+    sales_columns = get_last_5_entries_sales()
+    stock_data = calculate_stock_data(sales_columns)
+    update_worksheet(stock_data, "stock")
 
 print("Welcome to Love Sandwiches Data Automation.")
-#main()
+main()
 
-sales_columns = get_last_5_entries_sales()
