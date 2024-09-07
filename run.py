@@ -121,7 +121,18 @@ def calculate_surplus_data(sales_row):
     
     return surplus_data
 
+def get_last_5_entries_sales():
+    """
+    Collects columns of data from the sales worksheet, collecting
+    the last 5 entries for eacj sandwich and returns the data as a list of lists
+    """
+    sales = SHEET.worksheet("sales")
 
+    columns = []
+    for ind in range(1, 7):
+        column = sales.col_values(ind)
+        columns.append(column[-5:]) # slices the last 5 entries from our lists
+    return columns
 
 
 # wrap main function calls
@@ -136,4 +147,6 @@ def main():
     update_worksheet(new_surplus_data, "surplus") # add the new function and PASS IT THE DATA YOU WANT TO INSERT
 
 print("Welcome to Love Sandwiches Data Automation.")
-main()
+#main()
+
+sales_columns = get_last_5_entries_sales()
