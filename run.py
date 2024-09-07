@@ -1,6 +1,5 @@
 import gspread
 from google.oauth2.service_account import Credentials
-from pprint import pprint
 
 # define scope as a contstant variable (capital letters)
 SCOPE = [
@@ -26,7 +25,7 @@ def get_sales_data():
         print("Example: 10,20,30,40,50,60\n")
 
         # next use the input method to get our sales data from the terminal
-        data_str = input("Enter your data here: ")
+        data_str = input("Enter your data here:\n")
     
         # convert the user's string input data to a list 
         # and use the split() method - returns the broken up values as a list -  
