@@ -99,6 +99,18 @@ def calculate_surplus_data(sales_row):
     
     return surplus_data
 
+# create a function to update the surplus worksheet
+def update_surplus_data(surplus_data):
+    """
+    Update the surplus worksheet with the new surplus data.
+    This appends the surplus data to the surplus worksheet.
+    """
+    print("Updating surplus data in the spreadsheet...\n")
+    surplus_worksheet = SHEET.worksheet("surplus")
+    surplus_worksheet.append_row(surplus_data)
+    print("Surplus data updated!\n")
+
+
 # wrap main function calls
 def main():
     """
@@ -109,6 +121,7 @@ def main():
     update_sales_worksheet(sales_data)
     new_surplus_data = calculate_surplus_data(sales_data)
     print(new_surplus_data)
+    update_surplus_data(new_surplus_data) # add the new function and PASS IT THE DATA YOU WANT TO INSERT
 
 print("Welcome to Love Sandwiches Data Automation.")
 main()
