@@ -149,6 +149,17 @@ def calculate_stock_data(data):
     return new_stock_data # and pass it back to where the function was called
     # and assign it a variable named stock_data
 
+# this function works as is - the one below works the same but includes the 'data' parameter
+def get_stock_values():
+    """
+    Builds a dictionary with 'sandwich' keys and 'stock' values
+    """
+    stock = SHEET.worksheet("stock").get_all_values() # access the "stock" worksheet
+    keys = stock[0] # assign 1st row to keys
+    values = stock[-1] # assign last row to values
+    
+    stock_dict = dict(zip(keys, values)) # use zip() to combine two lists into one object
+    print(stock_dict)
 
 # wrap main function calls
 def main():
@@ -165,5 +176,6 @@ def main():
     update_worksheet(stock_data, "stock")
 
 print("Welcome to Love Sandwiches Data Automation.")
-main()
+#main()
 
+get_stock_values()
