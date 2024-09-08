@@ -150,32 +150,68 @@ def calculate_stock_data(data):
     # and assign it a variable named stock_data
 
 # this function works as is - the one below works the same but includes the 'data' parameter
-def get_stock_values():
-    """
-    Builds a dictionary with 'sandwich' keys and 'stock' values
-    """
-    stock = SHEET.worksheet("stock").get_all_values() # access the "stock" worksheet
-    keys = stock[0] # assign 1st row to keys
-    values = stock[-1] # assign last row to values
+# def get_stock_values():
+#     """
+#     Builds a dictionary with 'sandwich' keys and 'stock' values
+#     """
+#     stock = SHEET.worksheet("stock").get_all_values() # access the "stock" worksheet
+#     keys = stock[0] # assign 1st row to keys
+#     values = stock[-1] # assign last row to values
     
-    stock_dict = dict(zip(keys, values)) # use zip() to combine two lists into one object
-    print(stock_dict)
+#     stock_dict = dict(zip(keys, values)) # use zip() to combine two lists into one object
+#     print(stock_dict)
+
+# this also works but has no variable named 'headings
+# def get_stock_values(data):
+#     """
+#     Builds a dictionary with 'sandwich' keys and 'stock' values
+#     """
+#     keys = data[0] # assign 1st row to keys - the data here is what 
+#     #has been passed when calling the function near the botton i.e. stock_values data
+#     values = data[-1] # assign last row to values
+
+#     stock_values = dict(zip(keys, values)) # use zip() to combine two lists into one object
+#     print(f"Current stock: {stock_values}")
+#     return stock_values
 
 # wrap main function calls
 def main():
     """
-    Run all program functions
+    Run all program functions.
     """
     data = get_sales_data()
     sales_data = [int(num) for num in data]
     update_worksheet(sales_data, "sales")
-    new_surplus_data = calculate_surplus_data(sales_data)
-    update_worksheet(new_surplus_data, "surplus") # add the new function and PASS IT THE DATA YOU WANT TO INSERT
+
+    new_surplus_row = calculate_surplus_data(sales_data)
+    update_worksheet(new_surplus_row, "surplus")
+
     sales_columns = get_last_5_entries_sales()
     stock_data = calculate_stock_data(sales_columns)
     update_worksheet(stock_data, "stock")
+    return stock_data
 
-print("Welcome to Love Sandwiches Data Automation.")
-#main()
 
-get_stock_values()
+print("Welcome to Love Sandwiches data automation.\n")
+stock_data = main()
+
+# student writes function
+def get_stock_values(data):
+    """
+    Print out the calculated stock numbers for each sandwich type.
+    """
+    headings = SHEET.worksheet("stock").get_all_values()[0]
+
+    # headings = SHEET.worksheet('stock').row_values(1)
+
+    print("Make the following numbers of sandwiches for next market:\n")
+
+    # new_data = {}
+    # for heading, stock_num in zip(headings, data):
+    #     new_data[heading] = stock_num
+    # return new_data
+    
+    return {heading: data for heading, data in zip(headings, data)}
+    
+stock_values = get_stock_values(stock_data)
+print(stock_values)
